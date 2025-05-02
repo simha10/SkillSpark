@@ -12,8 +12,8 @@ const AuthProvider = ({ children }) => {
         return localStorage.setItem("token", servertoken);
     };
 
-    let isLooggedIn = !!token;
-    console.log("isLooggedIn", isLooggedIn);
+    let isLoggedIn = !!token;
+    console.log("isLoggedIn", isLoggedIn);
 
     const LogoutUser = () => {
         setToken("");
@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
                 });
                 if (response.ok) {
                     const data = await response.json();
-                    setUser(data.userData); // Set user data in state
+                    setUser(data.msg); // Set user data in state
                 }
                 else{
                     console.error("Failed to fetch user data:", response.statusText);
@@ -52,7 +52,7 @@ const AuthProvider = ({ children }) => {
 
 
     return (
-        <AuthContext.Provider value={{ isLooggedIn, storeTokenInLS, LogoutUser, user }}>
+        <AuthContext.Provider value={{ isLoggedIn, storeTokenInLS, LogoutUser, user }}>
             {children}
         </AuthContext.Provider>
     );

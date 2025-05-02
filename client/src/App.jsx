@@ -21,7 +21,9 @@ function App() {
     <>
     <AuthProvider>
       <BrowserRouter>
+        <div className=' z-50'>
         <Navbar />
+        </div>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />

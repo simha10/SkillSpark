@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
 
-const MotionLink = motion(Link);
+const MotionLink = motion.create(Link);
 
 
 // Animation variants for fade-in and slide-up effects

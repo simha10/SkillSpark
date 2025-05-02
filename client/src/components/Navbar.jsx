@@ -10,23 +10,26 @@ const Navbar = () => {
         setIsOpen(!isOpen);
     };
 
-    const { isLooggedIn, LogoutUser } = useAuth();
+    const { isLoggedIn, LogoutUser, user } = useAuth(); // Corrected spelling of isLoggedIn
+
 
     return (
         <>
             <div className="flex justify-between items-center p-6 bg-gray-900 text-white shadow-lg">
                 <h1 className="text-4xl font-bold tracking-tight drop-shadow-xl">
-                    <Link to="/" className="hover:text-blue-300 transition-colors duration-200">SkillSpark</Link>
+                    <Link to="/" className="hover:text-blue-300 transition-colors duration-200">
+                        SKillSpark <span className='text-xl'>is made for you,</span> <span className='text-cyan-400 text-2xl'>{isLoggedIn && user?.username ? user.username : 'Guest'}</span>
+                    </Link>
                 </h1>
                 <div className="md:hidden" onClick={toggleMenu}>
                     {isOpen ? <X className="w-8 h-8 text-blue-300" /> : <Menu className="w-8 h-8 text-blue-300" />}
                 </div>
-                <nav className={`flex-col md:flex md:flex-row absolute md:static top-16 left-0 w-full md:w-auto bg-gray-900 md:bg-transparent transition-all duration-300 ease-in-out ${isOpen ? 'flex' : 'hidden'} md:gap-8 p-4 md:p-0`}>
+                <nav className={`flex-col md:flex md:flex-row absolute md:static top-16 left-0 w-full md:w-auto bg-gray-900 md:bg-transparent transition-all duration-300 ease-in-out ${isOpen ? 'flex z-50' : 'hidden'} md:gap-8 p-4 md:p-0`}>
                     <Link to="/" className="py-2 md:py-0 text-lg font-medium hover:text-blue-400 hover:border-b-2 border-blue-400 transition-all duration-200">Home</Link>
                     <Link to="/about" className="py-2 md:py-0 text-lg font-medium hover:text-blue-400 hover:border-b-2 border-blue-400 transition-all duration-200">About</Link>
                     <Link to="/services" className="py-2 md:py-0 text-lg font-medium hover:text-blue-400 hover:border-b-2 border-blue-400 transition-all duration-200">Services</Link>
                     <Link to="/contact" className="py-2 md:py-0 text-lg font-medium hover:text-blue-400 hover:border-b-2 border-blue-400 transition-all duration-200">Contact</Link>
-                    {isLooggedIn ? (
+                    {isLoggedIn ? (
                         <Link to="/logout" className="py-2 md:py-0 text-lg font-medium hover:text-blue-400 hover:border-b-2 border-blue-400 transition-all duration-200" onClick={LogoutUser}>Logout</Link>
                     ) : (
                         <>
