@@ -13,7 +13,8 @@ const Register = () => {
   });
 
   const navigate = useNavigate();
-  const URL = "http://localhost:5000/api/auth/register";
+  //const URL ="https://localhost:5000/api/auth/user" for local testing
+  const URL = "https://skillspark-backend-30l7.onrender.com/api/auth/register";
   
   const storeTokenInLS = (token) => {
     localStorage.setItem("token", token);

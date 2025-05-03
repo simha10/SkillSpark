@@ -13,13 +13,11 @@ const Contact = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    if (user) {
-      setContact({
-        username: user.username,
-        email: user.email,
-        message: "",
-      });
-    }
+    setContact({
+      username: user?.username || "",
+      email: user?.email || "",
+      message: "",
+    });
   }, [user]);
 
   const handleInput = (e) => {
@@ -31,7 +29,8 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/form/contact", {
+      //const response = await fetch("https://localhost:5000/api/auth/user" for local testing
+      const response = await fetch("https://skillspark-backend-30l7.onrender.com/api/form/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -152,7 +151,7 @@ const Contact = () => {
         </section>
       </div>
       <Footer />
-      <style jsx>{`
+      <style>{`
         @keyframes gradient {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }

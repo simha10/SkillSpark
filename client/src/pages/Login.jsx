@@ -9,7 +9,8 @@ const Login = () => {
   });
 
   const navigate = useNavigate();
-  const URL = "http://localhost:5000/api/auth/login";
+    //const URL ="https://localhost:5000/api/auth/user" for local testing
+  const URL = "https://skillspark-backend-30l7.onrender.com/api/auth/login";
 
   // Function to store token in localStorage
   const storeTokenInLS = (token) => {

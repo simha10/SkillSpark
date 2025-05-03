@@ -17,7 +17,9 @@ const AuthProvider = ({ children }) => {
 
         if (token) {
             try {
-                const response = await fetch("http://localhost:5000/api/auth/user", {
+                // Fetch user data from the API using the token
+                //const response = await fetch("https://localhost:5000/api/auth/user" for local testing
+                const response = await fetch("https://skillspark-backend-30l7.onrender.com/api/auth/user", {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`,
