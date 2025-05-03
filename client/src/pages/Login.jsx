@@ -1,8 +1,6 @@
-import React from 'react';
-import { useState } from 'react';
-import Footer from './Footer';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from "../store/auth";
+import React, { useState } from "react";
+import Footer from "./Footer";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [User, setUser] = useState({
@@ -11,13 +9,15 @@ const Login = () => {
   });
 
   const navigate = useNavigate();
-  const { storeTokenInLS } = useAuth();
-  const URL = "https://skillspark-backend-30l7.onrender.com/api/auth/login";
+  const URL = "http://localhost:5000/api/auth/login";
+
+  // Function to store token in localStorage
+  const storeTokenInLS = (token) => {
+    localStorage.setItem("token", token);
+  };
 
   const handleInput = (e) => {
-    let name = e.target.name;
-    let value = e.target.value;
-
+    const { name, value } = e.target;
     setUser({
       ...User,
       [name]: value,
@@ -34,21 +34,20 @@ const Login = () => {
         },
         body: JSON.stringify(User),
       });
-
+  
       if (response.ok) {
         const res_data = await response.json();
         storeTokenInLS(res_data.token);
-        alert("login successful");
-        setUser({
-          email: "",
-          password: "",
-        });
-        navigate("/");
+        alert("Login successful");
+        setUser({ email: "", password: "" });
+        navigate("/profile");
       } else {
-        alert("Invalid credentials");
+        const errorData = await response.json();
+        alert(errorData.message || "Invalid credentials");
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error during login:", error);
+      alert("Unable to connect to the server. Please try again later.");
     }
   };
 
@@ -65,7 +64,7 @@ const Login = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           </div>
 
-          <form onSubmit={handleSubmit} className="w-full md:w-1/2 max-w-md space-y-8 ">
+          <form onSubmit={handleSubmit} className="w-full md:w-1/2 max-w-md space-y-8">
             <div className="text-center mb-8">
               <h1 className="text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-pink-600 animate-pulse">
                 Welcome Back
@@ -89,11 +88,6 @@ const Login = () => {
                   value={User.email}
                   onChange={handleInput}
                 />
-                <span className="absolute inset-y-0 right-4 flex items-center text-gray-400 top-10">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l9 6 9-6m0 12H3V8h18v12z" />
-                  </svg>
-                </span>
               </div>
 
               <div className="relative">
@@ -111,11 +105,6 @@ const Login = () => {
                   onChange={handleInput}
                   className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-indigo-200 focus:border-indigo-500 outline-none transition-all duration-300 hover:shadow-lg"
                 />
-                <span className="absolute inset-y-0 right-4 flex items-center text-gray-400 top-10">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 11c0-1.1.9-2 2-2s2 .9 2 2-2 4-2 4m-4-4c0-1.1.9-2 2-2s2 .9 2 2m-6 2c0-1.1.9-2 2-2s2 .9 2 2m-6 2c0-1.1.9-2 2-2s2 .9 2 2m8-8V4m4 4h-4m-4 8h8m-8-4h8" />
-                  </svg>
-                </span>
               </div>
 
               <div className="space-y-4">
@@ -127,7 +116,7 @@ const Login = () => {
                 </button>
 
                 <p className="text-center text-sm text-gray-600">
-                  Don’t have an account?{' '}
+                  Don’t have an account?{" "}
                   <a href="/register" className="text-indigo-600 hover:text-indigo-800 font-medium transition-colors duration-300">
                     Register Now
                   </a>
@@ -140,34 +129,6 @@ const Login = () => {
           <Footer />
         </div>
       </div>
-      <style jsx>{`
-        @keyframes gradient {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .animate-gradient {
-          background-size: 200% 200%;
-          animation: gradient 10s ease infinite;
-        }
-        @keyframes slideIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-slide-in {
-          animation: slideIn 0.6s ease-out;
-        }
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.7; }
-        }
-        .animate-pulse {
-          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        .hover\\:shadow-2xl {
-          box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
-        }
-      `}</style>
     </>
   );
 };

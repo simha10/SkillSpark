@@ -13,8 +13,11 @@ const Register = () => {
   });
 
   const navigate = useNavigate();
-  const { storeTokenInLS } = useAuth();
-  const URL = "https://skillspark-backend-30l7.onrender.com/api/auth/register";
+  const URL = "http://localhost:5000/api/auth/register";
+  
+  const storeTokenInLS = (token) => {
+    localStorage.setItem("token", token);
+  };
 
   const handleInput = (e) => {
     let name = e.target.name;
@@ -36,7 +39,7 @@ const Register = () => {
         },
         body: JSON.stringify(User),
       });
-
+  
       if (response.ok) {
         const res_data = await response.json();
         storeTokenInLS(res_data.token);
@@ -47,10 +50,15 @@ const Register = () => {
           password: "",
         });
         navigate("/login");
-        alert("registration Successful");
+        alert("Registration Successful");
+      } else {
+        const errorData = await response.json();
+        console.error("Error:", errorData);
+        alert(`Error: ${errorData.message || "Registration failed"}`);
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      alert("An error occurred. Please try again.");
     }
   };
 
@@ -186,7 +194,7 @@ const Register = () => {
           <Footer />
         </div>
       </div>
-      <style jsx>{`
+      <style>{`
         @keyframes gradient {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }

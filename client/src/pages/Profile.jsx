@@ -29,7 +29,7 @@ const Profile = () => {
                     transition={{ delay: 0.2, duration: 0.4, type: "spring", stiffness: 120 }}
                 >
                     <img
-                        src="https://via.placeholder.com/100"
+                        src={user.profileImage || "https://via.placeholder.com/100"} // Use profileImage or fallback to default
                         alt="Profile"
                         className="w-24 h-24 rounded-full border-4 border-blue-200 object-cover"
                     />

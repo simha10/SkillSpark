@@ -10,7 +10,7 @@ const Navbar = () => {
         setIsOpen(!isOpen);
     };
 
-    const { isLoggedIn, user } = useAuth(); 
+    const { isLoggedIn, user } = useAuth();
 
 
     return (
@@ -18,7 +18,10 @@ const Navbar = () => {
             <div className="flex justify-between items-center p-6 bg-gray-900 text-white shadow-lg">
                 <h1 className="text-4xl font-bold tracking-tight drop-shadow-xl">
                     <Link to="/" className="hover:text-blue-300 transition-colors duration-200">
-<span className='text-xl'>is made for you,</span> <span className='text-cyan-400 text-2xl'>{isLoggedIn && user?.name ? user.name : 'Guest'}</span>
+                        SkillSpark <span className='text-xl'>is made for you,</span>
+                        <span className='text-cyan-400 text-2xl'>
+                            {isLoggedIn && user?.name ? user.name : 'Guest'}
+                        </span>
                     </Link>
                 </h1>
                 <div className="md:hidden" onClick={toggleMenu}>
