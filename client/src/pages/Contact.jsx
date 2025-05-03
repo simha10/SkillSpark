@@ -57,7 +57,7 @@ const Contact = () => {
         <section className="flex flex-col lg:flex-row items-center justify-center gap-12 bg-white/80 backdrop-blur-lg rounded-2xl shadow-2xl p-8 lg:p-12 transition-all duration-500 hover:shadow-3xl">
           <div className="w-full lg:w-1/2 max-w-md relative">
             <img
-              src="/src/assets/login.png"
+              src="https://img.freepik.com/free-vector/forms-concept-illustration_114360-4957.jpg?ga=GA1.1.277367697.1746265751&semt=ais_hybrid&w=740"
               alt="Contact illustration"
               className="w-full h-auto rounded-xl transform transition-all duration-700 hover:scale-105 hover:rotate-2"
             />

@@ -69,7 +69,7 @@ const Register = () => {
         <section className="flex flex-col md:flex-row items-center justify-center mt-4 px-6 py-16 max-w-6xl mx-auto gap-12 bg-white/90 backdrop-blur-lg p-8 rounded-2xl shadow-xl transition-all duration-500 hover:shadow-2xl animate-slide-in">
           <div className="w-full md:w-1/2 max-w-md relative group">
             <img
-              src="/src/assets/login.png"
+              src="https://img.freepik.com/free-vector/privacy-policy-concept-illustration_114360-7853.jpg?ga=GA1.1.277367697.1746265751&semt=ais_hybrid&w=740"
               alt="register page image"
               className="w-full h-auto object-cover rounded-2xl transform transition-all duration-700 group-hover:scale-105 group-hover:rotate-3 shadow-lg"
             />
