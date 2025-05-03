@@ -9,7 +9,12 @@ const errorMiddleware = require("./middleware/error-middleware");
 
 
 const corsOptions = {
-    origin: ["http://localhost:5173"],
+    origin: [
+        "https://skillspark-x366.onrender.com", // Correct frontend URL
+        "http://localhost:5173", // Local dev
+        "http://localhost:3000", // For serve -s dist
+        "http://localhost:4173" // For npm run preview
+      ],
     methods: "GET, POST, PUT, DELETE, PATCH, HEAD",
     credentials : true
 };
