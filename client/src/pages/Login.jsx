@@ -12,7 +12,7 @@ const Login = () => {
 
   const navigate = useNavigate();
   const { storeTokenInLS } = useAuth();
-  const URL = "http://localhost:5000/api/auth/login";
+  const URL = "https://skillspark-backend-30l7.onrender.com/api/auth/login";
 
   const handleInput = (e) => {
     let name = e.target.name;

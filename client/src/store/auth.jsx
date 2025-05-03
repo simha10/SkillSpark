@@ -1,42 +1,37 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
-const AuthProvider = ({ children }) => {  
-
+const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(localStorage.getItem("token"));
-    const [user , setUser] = useState(''); // Initialize user state
+    const [user, setUser] = useState({ name: "", email: "", phone: "" });
 
     const storeTokenInLS = (servertoken) => {
-        setToken(servertoken);  // Update state to trigger re-render
-        return localStorage.setItem("token", servertoken);
+        setToken(servertoken);
+        localStorage.setItem("token", servertoken);
     };
-
-    let isLoggedIn = !!token;
-    console.log("isLoggedIn", isLoggedIn);
 
     const LogoutUser = () => {
         setToken("");
+        setUser({ name: "", email: "", phone: "" });
         localStorage.removeItem("token");
     };
 
-    //JWT Authentication - to get logged in details
     const userAuthentication = async () => {
         const token = localStorage.getItem("token");
         if (token) {
             try {
-                const response = await fetch("http://localhost:5000/api/auth/user", {
+                const response = await fetch("https://skillspark-backend-30l7.onrender.com/api/auth/user", {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        // "Content-Type": "application/json",
                     },
                 });
                 if (response.ok) {
                     const data = await response.json();
-                    setUser(data.msg); // Set user data in state
-                }
-                else{
+                    setUser(data.user || { name: "", email: "", phone: "" });
+                } else {
                     console.error("Failed to fetch user data:", response.statusText);
                 }
             } catch (error) {
@@ -48,22 +43,20 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         userAuthentication();
     }, []);
-   
-
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, storeTokenInLS, LogoutUser, user }}>
+        <AuthContext.Provider value={{ isLoggedIn: !!token, user, storeTokenInLS, LogoutUser, userAuthentication }}>
             {children}
         </AuthContext.Provider>
     );
 };
 
 const useAuth = () => {
-    const authContextValue = useContext(AuthContext);
-    if (!authContextValue) {
+    const context = useContext(AuthContext);
+    if (!context) {
         throw new Error("useAuth must be used within an AuthProvider");
     }
-    return authContextValue;
+    return context;
 };
+
 export { AuthProvider, useAuth };
-export default AuthProvider;
