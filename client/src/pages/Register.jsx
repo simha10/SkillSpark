@@ -15,7 +15,7 @@ const Register = () => {
   const navigate = useNavigate();
   //const URL ="https://localhost:5000/api/auth/user" for local testing
   const URL = "https://skillspark-backend-30l7.onrender.com/api/auth/register";
-  
+
   const storeTokenInLS = (token) => {
     localStorage.setItem("token", token);
   };
@@ -40,9 +40,12 @@ const Register = () => {
         },
         body: JSON.stringify(User),
       });
-  
+
+      console.log("Raw response:", response); // Log the raw response
+
       if (response.ok) {
         const res_data = await response.json();
+        console.log("Parsed response data:", res_data); // Log parsed response
         storeTokenInLS(res_data.token);
         setUser({
           username: "",
@@ -54,11 +57,15 @@ const Register = () => {
         alert("Registration Successful");
       } else {
         const errorData = await response.json();
-        console.error("Error:", errorData);
-        alert(`Error: ${errorData.message || "Registration failed"}`);
+        console.error("Server error response:", errorData); // Log server error
+        if (errorData.msg === "email already exists") {
+          alert("This email is already registered. Please use a different email or log in.");
+        } else {
+          alert(`Error: ${errorData.msg || "Registration failed"}`);
+        }
       }
     } catch (err) {
-      console.error(err);
+      console.error("Network error:", err); // Log network errors
       alert("An error occurred. Please try again.");
     }
   };
